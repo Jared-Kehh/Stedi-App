@@ -43,8 +43,12 @@ const OnboardingScreen = ({setFirstLaunch}) =>{
             {
               backgroundColor: '#fff',
               image: <Image   style={{height: '60%', width: '90%', resizeMode:'contain', marginBottom:-200}} source={require('../image/testing.png')} />,
-              title: <Text style={{fontWeight:'bold', textAlign:'center', color:'#A0CE4E', fontSize:19, margin:12,  marginTop: -70}}>Welcome to STEDI  Balance</Text>,
-              subtitle: 'STEDI Balance will now send a text with a code',
+              title: <Text style={{fontWeight:'bold', fontSize: 19, margin:15, textAlign:'center', color:'#A0CE4E', marginTop: -130 }}></Text>,
+              subtitle: (
+                <View>
+                <Text style={{fontWeight:'bold', textAlign:'center', color:'#A0CE4E', fontSize:19, margin:12,  marginTop: -70}}>We value your privacy. Please share your phone so we can track your balance.</Text>
+                </View>
+              ),
             },
             {
                 backgroundColor: '#fff',
@@ -79,6 +83,20 @@ const styles = StyleSheet.create({
         flex:1, 
         alignItems:'center',
         justifyContent: 'center'
+    },
+    input: {
+      height: 40,
+      margin: 12,
+      borderWidth: 1,
+      padding: 10,
+    },
+    margin:{
+      marginTop:100
+    },
+    button: {
+      alignItems: "center",
+      backgroundColor: "#DDDDDD",
+      padding: 10
     }
 })
 
