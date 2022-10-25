@@ -15,6 +15,7 @@ const App = () =>{
   const [isFirstLaunch, setFirstLaunch] = React.useState(true);
   const [isLoggedIn,setIsLoggedIn] = React.useState(false);
   const [homeTodayScore, setHomeTodayScore] = React.useState(0);
+  const [phoneNumber, setPhoneNumber] = React.useState("")
 
    if (isFirstLaunch == true){
 return(
@@ -33,8 +34,15 @@ return(
         <Button
         title='Send'
           style={styles.button}
-          onPress={()=>{
+          onPress={async()=>{
             console.log('Button was pressed!')
+            await fetch ('https://dev.stedi.me/twofactorlogin/9092395818',
+            {
+              method:'POST',
+              headers:{
+                'content-type':'application/text'
+              }
+            })
           }}
         />
       </View>
