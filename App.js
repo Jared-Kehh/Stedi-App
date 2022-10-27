@@ -27,16 +27,19 @@ return(
   } else{
     return(
       <View>
-        <TextInput style={styles.input}
+        <TextInput 
+        placeholder='Phone Number'
+        style={styles.input}
         placeholderTextColor='#4251f5'
-        placeholder='Phone Number'>
+        value={phoneNumber}
+        onChangeText={setPhoneNumber}>
         </TextInput>
         <Button
         title='Send'
           style={styles.button}
           onPress={async()=>{
             console.log('Button was pressed!')
-            await fetch ('https://dev.stedi.me/twofactorlogin/9092395818',
+            await fetch ('https://dev.stedi.me/twofactorlogin/'+phoneNumber,
             {
               method:'POST',
               headers:{
