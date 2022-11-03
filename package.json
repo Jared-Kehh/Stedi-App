@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
-    "@react-native-async-storage/async-storage": "^1.17.7",
+    "@react-native-async-storage/async-storage": "^1.17.10",
     "@react-native-masked-view/masked-view": "0.2.6",
     "@react-native-picker/picker": "github:react-native-picker/picker",
     "@react-navigation/bottom-tabs": "^6.0.5",

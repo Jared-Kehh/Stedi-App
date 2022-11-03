@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import OnboardingScreen from './screens/OnboardingScreen';
 import Home from './screens/Home';
 import { NavigationContainer } from '@react-navigation/native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -21,7 +21,7 @@ const App = () =>{
   const [loggedInState,setLoggedInState] = React.useState(loggedInStates.NOT_LOGGED_IN);
   const [homeTodayScore, setHomeTodayScore] = React.useState(0);
   const [phoneNumber, setPhoneNumber] = React.useState("");
-  const[oneTimePassword, setOneTimePassword] = React.useState(null);
+  const [oneTimePassword, setOneTimePassword] = React.useState(null);
 
    if (isFirstLaunch == true){
 return(
@@ -52,7 +52,7 @@ return(
                 'content-type':'application/text'
               }
             })
-            setIsLoggedInState(loggedInStates.CODE_SENT)
+            setLoggedInState(loggedInStates.CODE_SENT)
           }}
         />
       </View>
@@ -73,16 +73,23 @@ return(
         title='Login'
           style={styles.button}
           onPress={async()=>{
-            console.log('Login Button was pressed!')
-            await fetch ('https://dev.stedi.me/twofactorlogin',
+            console.log('Login Button was pressed!');
+            const loginResponse=await fetch ('https://dev.stedi.me/twofactorlogin',
             {
               method:'POST',
               headers:{
                 'content-type':'application/text'
               },
-              body: phoneNumber, oneTimePassword
-            })
-            setIsLoggedInState(loggedInStates.CODE_SENT)
+              body: JSON.stringify({
+                phoneNumber: phoneNumber,
+                oneTimePassword: oneTimePassword
+              })
+            });
+            if (loginResponse.status==200){//200 means the password was valid
+              setLoggedInState(loggedInStates.LOGGED_IN);
+            } else{
+              setLoggedInState(loggedInStates.NOT_LOGGED_IN);
+            }
           }}
         />
       </View>
