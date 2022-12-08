@@ -10,6 +10,7 @@ import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage, button
 import exerciseImg from '../image/exercise2.png';
 import ProgressBar from 'react-native-progress/Bar';
 import { FontAwesome5 } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { Ionicons} from 'react-native-vector-icons';
 // import { Button } from 'react-native-elements';
 // import { IconButton } from 'react-native-paper';
@@ -47,6 +48,16 @@ useEffect(()=>{
   }, 1000);
 }, [counter, currentScreen]);
 
+useEffect(()=>{
+  const getUserName = async ()=>{
+    userName.current= await AsyncStorage.getItem('userName');
+    console.log('Counter userName',userName.current);    
+    token.current = await AsyncStorage.getItem('sessionToken');
+   console.log('counter token:' ,token.current);
+  };
+  getUserName();
+},[]);
+
  const clockify = () =>{
   let hours = Math.floor(counter / 60 / 60);
   let mins=  Math.floor(counter / 60 % 60);
@@ -68,7 +79,7 @@ const startTime = useRef(0);
 const stopTime = useRef(0);
 const testTime = useRef(0);
 const token = useRef("");
-const userName = useRef();
+const userName = useRef("");
 
 
 const savingSteps = async(event) =>{
@@ -88,14 +99,10 @@ stepPoints  = [];
    previousTime = stepObject.time;
    stepPoints.push(stepTime);
 }); 
-stepPoints.length=30;
-  try{
-  const sessionToken = await AsyncStorage.getItem("sessionToken");
-  const userName = await AsyncStorage.getItem("userName");
-  token.current = sessionToken;
-  userName.current = userName;
 
- token.current = await tokenResponse.text();
+  try{
+    token.current = await AsyncStorage.getItem('sessionToken');
+    userName.current =await AsyncStorage.getItem('userName');
 console.log('token:' ,token.current);
 await fetch('https://dev.stedi.me/rapidsteptest',{
   method:'POST',
@@ -114,7 +121,7 @@ totalSteps:30
 })
   }
  catch(error){
-  console.log('error', error);
+  console.log('save error', error);
  }
 }
 
@@ -123,6 +130,8 @@ totalSteps:30
 const getResults = async () =>{
 
 try{
+  console.log('UserName:'+userName.current);
+  console.log('Token before calling score:'+token.current);
   const scoreResponse = await fetch('https://dev.stedi.me/riskscore/'+userName.current,{
   method:'GET',
   headers:{
