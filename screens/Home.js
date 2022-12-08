@@ -18,7 +18,9 @@ const todayScore = async() =>{
   let scoreObject ={};
   try{
     const sessionToken = await AsyncStorage.getItem('sessionToken')
+    console.log('sessionToken in Home', sessionToken);
     const userName = await AsyncStorage.getItem('userName')
+    console.log('userName', userName);
     token.current = sessionToken
     const scoreResponse = await fetch('https://dev.stedi.me/riskscore/' +userName,{
     method:'GET',
@@ -28,6 +30,8 @@ const todayScore = async() =>{
     }
   })
   console.log('token:', token.current);
+  const scoreText = await scoreResponse.text();
+  console.log('scoreText'. scoreText);
   scoreObject = await scoreResponse.json();
   setScore(scoreObject.score);
   console.log(scoreObject.score);

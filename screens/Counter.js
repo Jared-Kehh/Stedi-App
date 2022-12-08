@@ -90,11 +90,13 @@ stepPoints  = [];
 }); 
 stepPoints.length=30;
   try{
-    const sessionToken = await AsyncStorage.getItem('sessionToken')
-    const userName = await AsyncStorage.getItem('userName')
-    token.current = sessionToken;
-    userName.current = userName;
-console.log('token counter:' ,token.current);
+  const sessionToken = await AsyncStorage.getItem("sessionToken");
+  const userName = await AsyncStorage.getItem("userName");
+  token.current = sessionToken;
+  userName.current = userName;
+
+ token.current = await tokenResponse.text();
+console.log('token:' ,token.current);
 await fetch('https://dev.stedi.me/rapidsteptest',{
   method:'POST',
   headers:{
@@ -102,7 +104,7 @@ await fetch('https://dev.stedi.me/rapidsteptest',{
    'suresteps.session.token': token.current
   },
   body:JSON.stringify({
-customer:userName.current,
+customer: userName.current,
 startTime: startTime.current,
 stepPoints,
 stopTime: stopTime.current,
