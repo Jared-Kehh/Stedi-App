@@ -30,7 +30,6 @@ const todayScore = async() =>{
     }
   })
   console.log('token:', token.current);
-  console.log('scoreText'. scoreText);
   scoreObject = await scoreResponse.json();
   setScore(scoreObject.score);
   console.log(scoreObject.score);
